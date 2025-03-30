@@ -20,14 +20,9 @@ Console.Clear();
 
 Tabuleiro tabuleiro = new Tabuleiro();
 bool fim = false;
-bool vezjogador1 = true;
+bool vezjogador1 = jogador1.Simbolo == 'X';
 while (fim == false)
 {
-    if (tabuleiro._jogadasrealizadas == 0)
-    {
-        vezjogador1 = jogador1.Simbolo == 'X' ? true : false;
-    }
-
     Jogador jogadorAtual = vezjogador1 ? jogador1 : jogador2;
     MostrarInterface(jogador1,jogador2,tabuleiro,jogadorAtual);
     tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
@@ -40,7 +35,9 @@ while (fim == false)
             Console.WriteLine("Empate!");
             fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
         }
-        vezjogador1 = !vezjogador1;
+        else {  
+            vezjogador1 = !vezjogador1; // O resetarjogo ja está invertendo isso daqui, por isso coloquei  else
+        }
     }
     else
     {
@@ -53,7 +50,7 @@ Console.WriteLine("Obrigado Por Jogar!");
 Console.ReadLine();
 
 
-static char SelecionarSimbolo(string nome) 
+static char  SelecionarSimbolo(string nome) 
 {
     while (true)
     {
@@ -86,10 +83,9 @@ static bool ResetarJogo(Jogador jogador1, Jogador jogador2, ref Tabuleiro tabule
         string resposta = Console.ReadLine().ToUpper();
         if (resposta == "S")
         {
-            tabuleiro = new Tabuleiro();
+            tabuleiro.Resetar();
             jogador1.TrocarSimbolo(jogador2);
-            tabuleiro.ResetaContagemDeJogadas();
-            vezjogador1 = !vezjogador1;
+            vezjogador1 = jogador1.Simbolo == 'X'; 
             return false;
         }
         else if (resposta == "N")

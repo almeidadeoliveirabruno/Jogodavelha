@@ -17,33 +17,32 @@ Jogador jogador2 = new Jogador(nome2, jogador1);
 Console.Clear();
 #endregion
 
-
-Tabuleiro _tabuleiro = new Tabuleiro();
+Tabuleiro tabuleiro = new Tabuleiro();
 bool fim = false;
 bool vezjogador1 = jogador1.Simbolo == 'X';
 while (fim == false)
 {
     Jogador jogadorAtual = vezjogador1 ? jogador1 : jogador2;
-    MostrarInterface(jogador1,jogador2,_tabuleiro,jogadorAtual);
-    _tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
-    fim = _tabuleiro.VerificaVitoria(jogadorAtual);
+    MostrarInterface(jogador1,jogador2,tabuleiro,jogadorAtual);
+    tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
+    fim = tabuleiro.VerificaVitoria(jogadorAtual);
     if (fim == false)
     {
-        if (_tabuleiro._jogadasrealizadas == 9)
+        if (tabuleiro.JogadasRealizadas == 9)
         {
-            MostrarInterface(jogador1, jogador2, _tabuleiro, jogadorAtual);
+            MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
             Console.WriteLine("Empate!");
-            fim = ResetarJogo(jogador1, jogador2, ref _tabuleiro, ref vezjogador1);
-        }
+            fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
+        } 
         else {  
             vezjogador1 = !vezjogador1; // O resetarjogo ja está invertendo isso daqui, por isso coloquei  else
         }
     }
     else
     {
-        MostrarInterface(jogador1, jogador2, _tabuleiro, jogadorAtual);
+        MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
         Console.WriteLine($"O jogador {jogadorAtual.Nome} ganhou");
-        fim = ResetarJogo(jogador1, jogador2, ref _tabuleiro, ref vezjogador1);
+        fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
     }
 }
 Console.WriteLine("Obrigado Por Jogar!");

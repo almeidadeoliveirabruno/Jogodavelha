@@ -12,6 +12,10 @@ namespace Jogodavelha
     {
         public char[,] _tabuleiro { get; private set; }
         public int _jogadasrealizadas { get; private set; }
+        public int JogadasRealizadas
+        {
+            get { return _jogadasrealizadas; }
+        }
         public Tabuleiro()
         {
             _tabuleiro = new char[3, 3]

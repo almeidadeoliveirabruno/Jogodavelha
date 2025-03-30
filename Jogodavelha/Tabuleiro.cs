@@ -8,38 +8,36 @@ using System.Xml;
 
 namespace Jogodavelha
 {
-    class Tabuleiro
+    public class Tabuleiro
     {
-        public char[,] _tabuleiro { get; private set; }
-        public int _jogadasrealizadas { get; private set; }
-        public int JogadasRealizadas
-        {
-            get { return _jogadasrealizadas; }
-        }
+        public char[,] Grade { get; private set; }
+        public int JogadasRealizadas { get; private set; }
+       
         public Tabuleiro()
         {
-            _tabuleiro = new char[3, 3]
+            Grade = new char[3, 3]
             {
                 { '1', '2', '3' },
                 { '4', '5', '6' },
                 { '7', '8', '9' }
             };
-            _jogadasrealizadas = 0;
+            JogadasRealizadas = 0;
 
         }
 
         public void ExibirTabuleiro()
         {
             Console.WriteLine(); 
-            Console.WriteLine(" {0} | {1} | {2} ", _tabuleiro[0, 0], _tabuleiro[0, 1], _tabuleiro[0, 2]);
+            Console.WriteLine(" {0} | {1} | {2} ", Grade[0, 0], Grade[0, 1], Grade[0, 2]);
             Console.WriteLine("---|---|---");
-            Console.WriteLine(" {0} | {1} | {2} ", _tabuleiro[1, 0], _tabuleiro[1, 1], _tabuleiro[1, 2]);
+            Console.WriteLine(" {0} | {1} | {2} ", Grade[1, 0], Grade[1, 1], Grade[1, 2]);
             Console.WriteLine("---|---|---");
-            Console.WriteLine(" {0} | {1} | {2} ", _tabuleiro[2, 0], _tabuleiro[2, 1], _tabuleiro[2, 2]);
+            Console.WriteLine(" {0} | {1} | {2} ", Grade[2, 0], Grade[2, 1], Grade[2, 2]);
             Console.WriteLine();
         }
 
         public void MarcarTabuleiro(Char simboloAtual)
+            //marca o simbolo no tabuleiro, ele recebe o simbolo do jogador atual
         {
             bool jogadaInvalida = true;
             while (jogadaInvalida)
@@ -53,20 +51,21 @@ namespace Jogodavelha
                 }
                 catch (FormatException)
                 {
-                    Console.WriteLine("Digite um número válido!");
+                    Console.WriteLine("Digite apenas números inteiros!");
                 }
-                catch (ArgumentOutOfRangeException)
+                catch (ArgumentOutOfRangeException ex)
                 {
-                    Console.WriteLine("Digite o número dentro de um intervalo válido");
+                    Console.WriteLine("Digite um número de 1 até 9!"); 
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException ex)
                 {
-                    Console.WriteLine("Este quadrado ja foi marcado");
+                    Console.WriteLine("Este quadrado ja foi marcado!");
                 }
             }
         }
 
         private void ValidarMarcacao(int num, char simboloatual)
+            //verifica se o quadrado marcado pode ser marcado
         {
             Dictionary<int, (int, int)> numeroMarcado = new Dictionary<int, (int, int)>
             {
@@ -86,13 +85,13 @@ namespace Jogodavelha
             }
 
             (int linha, int coluna) = numeroMarcado[num];
-            if (_tabuleiro[linha, coluna] == 'X' || _tabuleiro[linha, coluna] == 'O')
+            if (Grade[linha, coluna] == 'X' || Grade[linha, coluna] == 'O')
             {
-                throw new InvalidOperationException("Ja foi marcado");
+                throw new InvalidOperationException();
             }
 
-            _tabuleiro[linha, coluna] = simboloatual;
-            _jogadasrealizadas++;
+            Grade[linha, coluna] = simboloatual;
+            JogadasRealizadas++;
 
         }
 
@@ -102,27 +101,27 @@ namespace Jogodavelha
             for (int i = 0; i < 3; i++)
             {
                 //Verifica a linha
-                if ((_tabuleiro[i, 0] == simbolo) && (_tabuleiro[i, 1] == simbolo) && (_tabuleiro[i, 2] == simbolo))
+                if ((Grade[i, 0] == simbolo) && (Grade[i, 1] == simbolo) && (Grade[i, 2] == simbolo))
                 {
                     jogadoratual.Vitorias++;
                     return true;
                 }
 
                 //Verifica a coluna
-                if ((_tabuleiro[0, i] == simbolo) && (_tabuleiro[1, i] == simbolo) && (_tabuleiro[2, i] == simbolo))
+                if ((Grade[0, i] == simbolo) && (Grade[1, i] == simbolo) && (Grade[2, i] == simbolo))
                 {
                     jogadoratual.Vitorias++;
                     return true;
                 }
             }
 
-            //diagonal principal
-            if ((_tabuleiro[0, 0] == simbolo) && (_tabuleiro[1, 1] == simbolo) && (_tabuleiro[2, 2] == simbolo))
+            //Diagonal principal
+            if ((Grade[0, 0] == simbolo) && (Grade[1, 1] == simbolo) && (Grade[2, 2] == simbolo))
             {
                 jogadoratual.Vitorias++;
                 return true;
             }
-            if (_tabuleiro[0, 2] == simbolo && _tabuleiro[1, 1] == simbolo && _tabuleiro[2, 0] == simbolo)
+            if (Grade[0, 2] == simbolo && Grade[1, 1] == simbolo && Grade[2, 0] == simbolo)
             {
                 jogadoratual.Vitorias++;
                 return true;
@@ -130,14 +129,15 @@ namespace Jogodavelha
             return false;
         }
         public void Resetar()
+            //Reinicia o tabuleiro
         {
-            _tabuleiro = new char[3, 3]
+            Grade = new char[3, 3]
             {
         { '1', '2', '3' },
         { '4', '5', '6' },
         { '7', '8', '9' }
             };
-            _jogadasrealizadas = 0;
+            JogadasRealizadas = 0;
         }
     }
     

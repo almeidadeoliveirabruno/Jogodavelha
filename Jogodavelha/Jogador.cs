@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Jogodavelha
 {
-    class Jogador
+    public class Jogador
     {
         public string Nome { get; private set; }
         public char Simbolo { get; private set; }
         public int Vitorias = 0;
-
 
         public Jogador(string nome, char simbolo)
             //construtor para o jogador 1.
@@ -28,7 +27,6 @@ namespace Jogodavelha
         }
 
         public void TrocarSimbolo(Jogador jogador)
-            // troca os simbolos dos jogadores
         {
             Char Aux = Simbolo;
             Simbolo = jogador.Simbolo;

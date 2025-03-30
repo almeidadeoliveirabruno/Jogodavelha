@@ -6,41 +6,40 @@ Console.WriteLine("O Símbolo X começa e caso tenha revanche, os símbolos são
 Console.WriteLine("Aperte enter para continuar");
 Console.ReadLine();
 Console.Clear();
-Console.WriteLine("Digite seu nome Jogador 1: ");
-string nome1 = Console.ReadLine();
+#endregion
+
+string nome1 = NomeValidacao("Jogador 1");
 char simbolo = SelecionarSimbolo(nome1); 
 Jogador jogador1 = new Jogador(nome1, simbolo);
 Console.Clear();
-Console.WriteLine("Digite o nome do Jogador 2: ");
-string nome2 = Console.ReadLine();
+string nome2 = NomeValidacao("Jogador 2");
 Jogador jogador2 = new Jogador(nome2, jogador1);
 Console.Clear();
-#endregion
-
 Tabuleiro tabuleiro = new Tabuleiro();
-bool fim = false;
 bool vezjogador1 = jogador1.Simbolo == 'X';
+HUD interfaceJogo = new HUD(jogador1, jogador2, tabuleiro);
+bool fim = false;
 while (fim == false)
 {
     Jogador jogadorAtual = vezjogador1 ? jogador1 : jogador2;
-    MostrarInterface(jogador1,jogador2,tabuleiro,jogadorAtual);
+    interfaceJogo.Mostrar(jogadorAtual);
     tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
     fim = tabuleiro.VerificaVitoria(jogadorAtual);
     if (fim == false)
     {
         if (tabuleiro.JogadasRealizadas == 9)
         {
-            MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
+            interfaceJogo.Mostrar(jogadorAtual);
             Console.WriteLine("Empate!");
             fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
         } 
         else {  
-            vezjogador1 = !vezjogador1; // O resetarjogo ja está invertendo isso daqui, por isso coloquei  else
+            vezjogador1 = !vezjogador1; 
         }
     }
     else
     {
-        MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
+        interfaceJogo.Mostrar(jogadorAtual);
         Console.WriteLine($"O jogador {jogadorAtual.Nome} ganhou");
         fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
     }
@@ -48,7 +47,23 @@ while (fim == false)
 Console.WriteLine("Obrigado Por Jogar!");
 Console.ReadLine();
 
-
+static string NomeValidacao(string JogadorNumero)
+{
+    string nome = "";
+    bool nomeinvalido = true;
+    while (nomeinvalido)
+    {
+        Console.WriteLine($"Digite o nome do {JogadorNumero}: ");
+        nome = Console.ReadLine();
+        nomeinvalido = string.IsNullOrWhiteSpace(nome);
+        if (nomeinvalido)
+        {
+            Console.Clear();
+            Console.WriteLine("Digite um nome com pelo menos um caractere");
+        }
+    }
+    return nome;
+}
 static char  SelecionarSimbolo(string nome) 
     //Método para garantir que o símbolo seja corretamente selecionado e para garantir que é um char.
 {
@@ -65,18 +80,6 @@ static char  SelecionarSimbolo(string nome)
             Console.WriteLine("Entre com um símbolo válido.");
         }
     }
-}
-static void MostrarInterface(Jogador jogador1, Jogador jogador2, Tabuleiro tabuleiro, Jogador jogadorAtual)
-    /* Método para exibir a interface */
-{
-    Console.Clear();
-    Console.WriteLine($"*******************************************    {jogador1.Nome}:{jogador1.Vitorias}   X  {jogador2.Nome}:{jogador2.Vitorias}    *******************************************");
-    Console.WriteLine();
-    Console.WriteLine($"É a vez do {jogadorAtual.Nome} com o símbolo {jogadorAtual.Simbolo} jogar!");
-    Console.WriteLine();
-    tabuleiro.ExibirTabuleiro();
-    Console.WriteLine();
-    
 }
 
 static bool ResetarJogo(Jogador jogador1, Jogador jogador2, ref Tabuleiro tabuleiro, ref bool vezjogador1)

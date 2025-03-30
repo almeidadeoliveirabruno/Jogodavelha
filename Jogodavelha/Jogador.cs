@@ -10,7 +10,7 @@ namespace Jogodavelha
     {
         public string Nome { get; private set; }
         public char Simbolo { get; private set; }
-        public string Teste { get; set; }
+        public int Vitorias = 0;
 
 
         public Jogador(string nome, char simbolo)
@@ -23,6 +23,13 @@ namespace Jogodavelha
         {
             Nome = nome;
             Simbolo = jogador1.Simbolo == 'X' ? 'O' : 'X';
+        }
+
+        public void TrocarSimbolo(Jogador jogador)
+        {
+            Char Aux = Simbolo;
+            Simbolo = jogador.Simbolo;
+            jogador.Simbolo = Aux;
         }
     }
 }

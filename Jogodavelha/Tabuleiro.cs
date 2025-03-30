@@ -40,6 +40,7 @@ namespace Jogodavelha
         }
 
         public void MarcarTabuleiro(Char simboloAtual)
+            //marca o simbolo no tabuleiro, ele recebe o simbolo do jogador atual
         {
             bool jogadaInvalida = true;
             while (jogadaInvalida)
@@ -53,20 +54,21 @@ namespace Jogodavelha
                 }
                 catch (FormatException)
                 {
-                    Console.WriteLine("Digite um número válido!");
+                    Console.WriteLine("Digite apenas números inteiros!");
                 }
-                catch (ArgumentOutOfRangeException)
+                catch (ArgumentOutOfRangeException ex)
                 {
-                    Console.WriteLine("Digite o número dentro de um intervalo válido");
+                    Console.WriteLine("Digite um número de 1 até 9!"); 
                 }
-                catch (InvalidOperationException)
+                catch (InvalidOperationException ex)
                 {
-                    Console.WriteLine("Este quadrado ja foi marcado");
+                    Console.WriteLine("Este quadrado ja foi marcado!");
                 }
             }
         }
 
         private void ValidarMarcacao(int num, char simboloatual)
+            //verifica se o quadrado marcado pode ser marcado
         {
             Dictionary<int, (int, int)> numeroMarcado = new Dictionary<int, (int, int)>
             {
@@ -88,7 +90,7 @@ namespace Jogodavelha
             (int linha, int coluna) = numeroMarcado[num];
             if (_tabuleiro[linha, coluna] == 'X' || _tabuleiro[linha, coluna] == 'O')
             {
-                throw new InvalidOperationException("Ja foi marcado");
+                throw new InvalidOperationException();
             }
 
             _tabuleiro[linha, coluna] = simboloatual;
@@ -130,6 +132,7 @@ namespace Jogodavelha
             return false;
         }
         public void Resetar()
+            //reinicia o tabuleiro
         {
             _tabuleiro = new char[3, 3]
             {

@@ -11,6 +11,7 @@ namespace Jogodavelha
     class Tabuleiro
     {
         public char[,] _tabuleiro { get; private set; }
+        public int _jogadasrealizadas {  get; private set; }
         public Tabuleiro()
         {
             _tabuleiro = new char[3, 3]
@@ -41,14 +42,14 @@ namespace Jogodavelha
                 {
                     Console.WriteLine("Digite um número para marcar: ");
                     int num = int.Parse(Console.ReadLine());
-                    validarmarcacao(num, simboloAtual);
+                    ValidarMarcacao(num, simboloAtual);
                     jogadaInvalida = false;
                 }
                 catch (FormatException)
                 {
-                    Console.WriteLine("Digite um número!");
+                    Console.WriteLine("Digite um número válido!");
                 }
-                catch (OverflowException)
+                catch (ArgumentOutOfRangeException)
                 {
                     Console.WriteLine("Digite o número dentro de um intervalo válido");
                 }
@@ -59,7 +60,7 @@ namespace Jogodavelha
             }
         }
 
-        private void validarmarcacao(int num, char simboloatual)
+        private void ValidarMarcacao(int num, char simboloatual)
         {
             Dictionary<int, (int, int)> numeroMarcado = new Dictionary<int, (int, int)>
             {
@@ -84,8 +85,39 @@ namespace Jogodavelha
                 throw new InvalidOperationException("Ja foi marcado");
             }
 
-            this._tabuleiro[linha,coluna] = simboloatual;
+            _tabuleiro[linha,coluna] = simboloatual;
+            _jogadasrealizadas++;
 
+        }
+
+        public bool VerificaVitoria(Jogador jogadoratual)
+        {
+            char simbolo = jogadoratual.Simbolo;
+            for (int i = 0; i < 3; i++)
+            {
+                //Verifica a linha
+                if ((_tabuleiro[i,0] == simbolo) && (_tabuleiro[i,1] == simbolo) && (_tabuleiro[i,2] == simbolo))
+                {
+                    return true;
+                }
+
+                //Verifica a coluna
+                if ((_tabuleiro[0, i] == simbolo) && (_tabuleiro[1, i] == simbolo) && (_tabuleiro[2, i] == simbolo))
+                {
+                    return true;
+                }
+            }
+
+            //diagonal principal
+            if ((_tabuleiro[0,0] == simbolo) && (_tabuleiro[1,1] == simbolo) && (_tabuleiro[2, 2] == simbolo))
+            {
+                return true;
+            }
+            if (_tabuleiro[0,2] == simbolo && _tabuleiro[1,1] == simbolo && _tabuleiro[2,0] == simbolo)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

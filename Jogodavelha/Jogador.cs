@@ -10,6 +10,7 @@ namespace Jogodavelha
     {
         public string Nome { get; private set; }
         public char Simbolo { get; private set; }
+        public string Teste { get; set; }
 
 
         public Jogador(string nome, char simbolo)

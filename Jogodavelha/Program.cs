@@ -18,22 +18,22 @@ Console.Clear();
 #endregion
 
 
-Tabuleiro tabuleiro = new Tabuleiro();
+Tabuleiro _tabuleiro = new Tabuleiro();
 bool fim = false;
 bool vezjogador1 = jogador1.Simbolo == 'X';
 while (fim == false)
 {
     Jogador jogadorAtual = vezjogador1 ? jogador1 : jogador2;
-    MostrarInterface(jogador1,jogador2,tabuleiro,jogadorAtual);
-    tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
-    fim = tabuleiro.VerificaVitoria(jogadorAtual);
+    MostrarInterface(jogador1,jogador2,_tabuleiro,jogadorAtual);
+    _tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
+    fim = _tabuleiro.VerificaVitoria(jogadorAtual);
     if (fim == false)
     {
-        if (tabuleiro._jogadasrealizadas == 9)
+        if (_tabuleiro._jogadasrealizadas == 9)
         {
-            MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
+            MostrarInterface(jogador1, jogador2, _tabuleiro, jogadorAtual);
             Console.WriteLine("Empate!");
-            fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
+            fim = ResetarJogo(jogador1, jogador2, ref _tabuleiro, ref vezjogador1);
         }
         else {  
             vezjogador1 = !vezjogador1; // O resetarjogo ja está invertendo isso daqui, por isso coloquei  else
@@ -41,9 +41,9 @@ while (fim == false)
     }
     else
     {
-        MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
+        MostrarInterface(jogador1, jogador2, _tabuleiro, jogadorAtual);
         Console.WriteLine($"O jogador {jogadorAtual.Nome} ganhou");
-        fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
+        fim = ResetarJogo(jogador1, jogador2, ref _tabuleiro, ref vezjogador1);
     }
 }
 Console.WriteLine("Obrigado Por Jogar!");
@@ -51,6 +51,7 @@ Console.ReadLine();
 
 
 static char  SelecionarSimbolo(string nome) 
+    //Método para garantir que o símbolo seja corretamente selecionado e para garantir que é um char.
 {
     while (true)
     {
@@ -67,15 +68,20 @@ static char  SelecionarSimbolo(string nome)
     }
 }
 static void MostrarInterface(Jogador jogador1, Jogador jogador2, Tabuleiro tabuleiro, Jogador jogadorAtual)
+    /* Método para exibir a interface */
 {
     Console.Clear();
-    Console.WriteLine($"*********************************************    {jogador1.Nome}:{jogador1.Vitorias}   X  {jogador2.Nome}:{jogador2.Vitorias}    *********************************************");
+    Console.WriteLine($"*******************************************    {jogador1.Nome}:{jogador1.Vitorias}   X  {jogador2.Nome}:{jogador2.Vitorias}    *******************************************");
+    Console.WriteLine();
+    Console.WriteLine($"É a vez do {jogadorAtual.Nome} com o símbolo {jogadorAtual.Simbolo} jogar!");
     Console.WriteLine();
     tabuleiro.ExibirTabuleiro();
-    Console.WriteLine($"É a vez do {jogadorAtual.Nome} com o símbolo {jogadorAtual.Simbolo} jogar:");
+    Console.WriteLine();
+    
 }
 
 static bool ResetarJogo(Jogador jogador1, Jogador jogador2, ref Tabuleiro tabuleiro, ref bool vezjogador1)
+    //Método para resetar o jogo ou finalizar. Ele altera tudo que é necessário para iniciar uma nova rodada 
 {
     while (true)
     {

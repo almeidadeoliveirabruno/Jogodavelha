@@ -14,18 +14,21 @@ namespace Jogodavelha
 
 
         public Jogador(string nome, char simbolo)
+            //construtor para o jogador 1.
         {
             Nome = nome;
             Simbolo = simbolo;
         }
 
         public Jogador(string nome, Jogador jogador1)
+            //construtor para o jogador 2, uma vez que ja sabemos o simbolo do primeiro.
         {
             Nome = nome;
             Simbolo = jogador1.Simbolo == 'X' ? 'O' : 'X';
         }
 
         public void TrocarSimbolo(Jogador jogador)
+            // troca os simbolos dos jogadores
         {
             Char Aux = Simbolo;
             Simbolo = jogador.Simbolo;

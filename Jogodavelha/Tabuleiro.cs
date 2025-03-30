@@ -26,12 +26,12 @@ namespace Jogodavelha
 
         public void ExibirTabuleiro()
         {
-            Console.WriteLine();
-            Console.WriteLine($"{_tabuleiro[0, 0]}|{_tabuleiro[0, 1]}|{_tabuleiro[0, 2]}");
-            Console.WriteLine("-----");
-            Console.WriteLine($"{_tabuleiro[1, 0]}|{_tabuleiro[1, 1]}|{_tabuleiro[1, 2]}");
-            Console.WriteLine("-----");
-            Console.WriteLine($"{_tabuleiro[2, 0]}|{_tabuleiro[2, 1]}|{_tabuleiro[2, 2]}");
+            Console.WriteLine(); 
+            Console.WriteLine(" {0} | {1} | {2} ", _tabuleiro[0, 0], _tabuleiro[0, 1], _tabuleiro[0, 2]);
+            Console.WriteLine("---|---|---");
+            Console.WriteLine(" {0} | {1} | {2} ", _tabuleiro[1, 0], _tabuleiro[1, 1], _tabuleiro[1, 2]);
+            Console.WriteLine("---|---|---");
+            Console.WriteLine(" {0} | {1} | {2} ", _tabuleiro[2, 0], _tabuleiro[2, 1], _tabuleiro[2, 2]);
             Console.WriteLine();
         }
 

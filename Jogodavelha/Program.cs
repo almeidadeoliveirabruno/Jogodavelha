@@ -20,17 +20,18 @@ Console.Clear();
 Tabuleiro tabuleiro = new Tabuleiro();
 bool fim = false;
 bool vezjogador1 = jogador1.Simbolo == 'X';
+Interface interfaceJogo = new Interface(jogador1, jogador2, tabuleiro);
 while (fim == false)
 {
     Jogador jogadorAtual = vezjogador1 ? jogador1 : jogador2;
-    MostrarInterface(jogador1,jogador2,tabuleiro,jogadorAtual);
+    interfaceJogo.Mostrar(jogadorAtual);
     tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
     fim = tabuleiro.VerificaVitoria(jogadorAtual);
     if (fim == false)
     {
         if (tabuleiro.JogadasRealizadas == 9)
         {
-            MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
+            interfaceJogo.Mostrar(jogadorAtual);
             Console.WriteLine("Empate!");
             fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
         } 
@@ -40,7 +41,7 @@ while (fim == false)
     }
     else
     {
-        MostrarInterface(jogador1, jogador2, tabuleiro, jogadorAtual);
+        interfaceJogo.Mostrar(jogadorAtual);
         Console.WriteLine($"O jogador {jogadorAtual.Nome} ganhou");
         fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
     }
@@ -66,18 +67,7 @@ static char  SelecionarSimbolo(string nome)
         }
     }
 }
-static void MostrarInterface(Jogador jogador1, Jogador jogador2, Tabuleiro tabuleiro, Jogador jogadorAtual)
-    /* Método para exibir a interface */
-{
-    Console.Clear();
-    Console.WriteLine($"*******************************************    {jogador1.Nome}:{jogador1.Vitorias}   X  {jogador2.Nome}:{jogador2.Vitorias}    *******************************************");
-    Console.WriteLine();
-    Console.WriteLine($"É a vez do {jogadorAtual.Nome} com o símbolo {jogadorAtual.Simbolo} jogar!");
-    Console.WriteLine();
-    tabuleiro.ExibirTabuleiro();
-    Console.WriteLine();
-    
-}
+
 
 static bool ResetarJogo(Jogador jogador1, Jogador jogador2, ref Tabuleiro tabuleiro, ref bool vezjogador1)
     //Método para resetar o jogo ou finalizar. Ele altera tudo que é necessário para iniciar uma nova rodada 

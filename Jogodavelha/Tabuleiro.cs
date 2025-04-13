@@ -64,7 +64,7 @@ namespace Jogodavelha
             }
         }
 
-        private void ValidarMarcacao(int num, char simboloatual)
+        public void ValidarMarcacao(int num, char simboloatual)
             //verifica se o quadrado marcado pode ser marcado
         {
             Dictionary<int, (int, int)> numeroMarcado = new Dictionary<int, (int, int)>

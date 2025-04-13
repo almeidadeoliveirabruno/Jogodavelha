@@ -1,49 +1,69 @@
 ﻿using Jogodavelha;
+using System;
 
 #region Bem vindo
+Console.ForegroundColor = ConsoleColor.Yellow; 
 Console.WriteLine("Bem vindo ao jogo da Velha!");
-Console.WriteLine("O Símbolo X começa e caso tenha revanche, os símbolos são trocados");
+Console.ResetColor();
+Console.WriteLine();
+
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.WriteLine("1 - O primeiro jogador pode escolher um símbolo");
+Console.WriteLine();
+Console.WriteLine("2 - O símbolo X começa");
+Console.WriteLine();
+Console.WriteLine("3 - Ao final de cada rodada os símbolos dos jogadores são trocados");
+Console.WriteLine();
+Console.WriteLine("4 - Quando o jogo começar, ajuste o tamanho do console para que o placar seja exibido corretamente na sua tela");
+Console.WriteLine();
+Console.ResetColor();
+Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine("Aperte enter para continuar");
+Console.ResetColor();
 Console.ReadLine();
 Console.Clear();
-#endregion
 
 string nome1 = NomeValidacao("Jogador 1");
+Console.Clear();
 char simbolo = SelecionarSimbolo(nome1); 
 Jogador jogador1 = new Jogador(nome1, simbolo);
 Console.Clear();
+
 string nome2 = NomeValidacao("Jogador 2");
 Jogador jogador2 = new Jogador(nome2, jogador1);
 Console.Clear();
+
 Tabuleiro tabuleiro = new Tabuleiro();
 bool vezjogador1 = jogador1.Simbolo == 'X';
-HUD interfaceJogo = new HUD(jogador1, jogador2, tabuleiro);
-bool fim = false;
-while (fim == false)
+Jogo jogo = new Jogo(jogador1,jogador2);
+#endregion
+
+#region Looping Jogo
+while (jogo.FimDeJogo == false)
 {
-    Jogador jogadorAtual = vezjogador1 ? jogador1 : jogador2;
-    interfaceJogo.Mostrar(jogadorAtual);
-    tabuleiro.MarcarTabuleiro(jogadorAtual.Simbolo);
-    fim = tabuleiro.VerificaVitoria(jogadorAtual);
-    if (fim == false)
+    jogo.ControleDeVez();
+    jogo.MostrarHud();
+    jogo.TabuleiroJogo.MarcarTabuleiro(jogo.JogadorAtual.Simbolo);
+    jogo.VerificaVitoria();
+    if (jogo.FimDeJogo == false)
     {
-        if (tabuleiro.JogadasRealizadas == 9)
+        if (jogo.VerificaEmpate())
         {
-            interfaceJogo.Mostrar(jogadorAtual);
+            jogo.MostrarHud();
             Console.WriteLine("Empate!");
-            fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
+            PerguntaResetarJogo(jogo);
         } 
         else {  
-            vezjogador1 = !vezjogador1; 
+            jogo.TrocaVez(); 
         }
     }
     else
     {
-        interfaceJogo.Mostrar(jogadorAtual);
-        Console.WriteLine($"O jogador {jogadorAtual.Nome} ganhou");
-        fim = ResetarJogo(jogador1, jogador2, ref tabuleiro, ref vezjogador1);
+        PerguntaResetarJogo(jogo);
     }
 }
+#endregion
+
 Console.WriteLine("Obrigado Por Jogar!");
 Console.ReadLine();
 
@@ -65,11 +85,11 @@ static string NomeValidacao(string JogadorNumero)
     return nome;
 }
 static char  SelecionarSimbolo(string nome) 
-    //Método para garantir que o símbolo seja corretamente selecionado e para garantir que é um char.
 {
+    //Método para garantir que o símbolo seja corretamente selecionado e para garantir que é um char.
+    Console.WriteLine($"Selecione um símbolo {nome}, escolha X ou O.");
     while (true)
     {
-        Console.WriteLine($"Selecione o símbolo {nome} (X ou O).");
         string simbolo_string = Console.ReadLine().ToUpper();
         if (simbolo_string == "X" || simbolo_string == "O")
         {
@@ -77,12 +97,13 @@ static char  SelecionarSimbolo(string nome)
         }
         else
         {
-            Console.WriteLine("Entre com um símbolo válido.");
+            Console.Clear() ;
+            Console.WriteLine($"Entre com um símbolo válido {nome}! As opções são (X ou O).");
         }
     }
 }
 
-static bool ResetarJogo(Jogador jogador1, Jogador jogador2, ref Tabuleiro tabuleiro, ref bool vezjogador1)
+static void PerguntaResetarJogo(Jogo jogo)
     //Método para resetar o jogo ou finalizar. Ele altera tudo que é necessário para iniciar uma nova rodada 
 {
     while (true)
@@ -91,14 +112,13 @@ static bool ResetarJogo(Jogador jogador1, Jogador jogador2, ref Tabuleiro tabule
         string resposta = Console.ReadLine().ToUpper();
         if (resposta == "S")
         {
-            tabuleiro.Resetar();
-            jogador1.TrocarSimbolo(jogador2);
-            vezjogador1 = jogador1.Simbolo == 'X'; 
-            return false;
+            jogo.ResetarJogo();
+            break;
         }
         else if (resposta == "N")
         {
-            return true;
+            jogo.FinalizarJogo();
+            break;
         }
         Console.WriteLine("Digite (S) para resetar ou (N) para parar de jogar");
     }

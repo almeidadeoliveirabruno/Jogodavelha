@@ -10,7 +10,7 @@ namespace Jogodavelha
     {
         public string Nome { get; private set; }
         public char Simbolo { get; private set; }
-        public int Vitorias = 0;
+        public int Vitorias { get; private set; } = 0;
 
         public Jogador(string nome, char simbolo)
             //construtor para o jogador 1.
@@ -24,6 +24,11 @@ namespace Jogodavelha
         {
             Nome = nome;
             Simbolo = jogador1.Simbolo == 'X' ? 'O' : 'X';
+        }
+
+        public void Ganhou()
+        {
+            Vitorias++;
         }
 
         public void TrocarSimbolo(Jogador jogador)

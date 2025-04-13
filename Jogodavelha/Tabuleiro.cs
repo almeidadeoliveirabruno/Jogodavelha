@@ -22,7 +22,6 @@ namespace Jogodavelha
                 { '7', '8', '9' }
             };
             JogadasRealizadas = 0;
-
         }
 
         public void ExibirTabuleiro()
@@ -35,21 +34,22 @@ namespace Jogodavelha
             Console.WriteLine(" {0} | {1} | {2} ", Grade[2, 0], Grade[2, 1], Grade[2, 2]);
             Console.WriteLine();
         }
-
+        
+        
         public void MarcarTabuleiro(Char simboloAtual)
             //marca o simbolo no tabuleiro, ele recebe o simbolo do jogador atual
         {
             bool jogadaInvalida = true;
             while (jogadaInvalida)
             {
+                Console.WriteLine("Digite um número para marcar: ");
                 try
                 {
-                    Console.WriteLine("Digite um número para marcar: ");
                     int num = int.Parse(Console.ReadLine());
                     ValidarMarcacao(num, simboloAtual);
                     jogadaInvalida = false;
                 }
-                catch (FormatException)
+                catch (FormatException ex)
                 {
                     Console.WriteLine("Digite apenas números inteiros!");
                 }
@@ -92,7 +92,6 @@ namespace Jogodavelha
 
             Grade[linha, coluna] = simboloatual;
             JogadasRealizadas++;
-
         }
 
         public bool VerificaVitoria(Jogador jogadoratual)
@@ -103,14 +102,12 @@ namespace Jogodavelha
                 //Verifica a linha
                 if ((Grade[i, 0] == simbolo) && (Grade[i, 1] == simbolo) && (Grade[i, 2] == simbolo))
                 {
-                    jogadoratual.Vitorias++;
                     return true;
                 }
 
                 //Verifica a coluna
                 if ((Grade[0, i] == simbolo) && (Grade[1, i] == simbolo) && (Grade[2, i] == simbolo))
                 {
-                    jogadoratual.Vitorias++;
                     return true;
                 }
             }
@@ -118,12 +115,10 @@ namespace Jogodavelha
             //Diagonal principal
             if ((Grade[0, 0] == simbolo) && (Grade[1, 1] == simbolo) && (Grade[2, 2] == simbolo))
             {
-                jogadoratual.Vitorias++;
                 return true;
             }
             if (Grade[0, 2] == simbolo && Grade[1, 1] == simbolo && Grade[2, 0] == simbolo)
             {
-                jogadoratual.Vitorias++;
                 return true;
             }
             return false;

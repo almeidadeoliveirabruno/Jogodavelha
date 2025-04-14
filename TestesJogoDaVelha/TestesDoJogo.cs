@@ -385,7 +385,7 @@ namespace TestesJogoDaVelha
             jogo.ResetarJogo();
             jogo.ControleDeVez();
 
-            Assert.AreEqual(jogo.JogadorAtual, jogador2, "O jogador 2 não iniciou como primero");
+            Assert.AreEqual(jogo.JogadorAtual, jogador2, "O jogador 2 não iniciou como primeiro");
             Assert.AreEqual(jogo.JogadorAtual.Simbolo, 'X', "O jogador 2 não recebeu o símbolo X");
             Assert.AreEqual(jogo.Jogador1.Simbolo, 'O', "O  Jogador 1 não recebeu o símbolo X");
         }

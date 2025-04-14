@@ -32,13 +32,10 @@ Console.Clear();
 string nome2 = NomeValidacao("Jogador 2");
 Jogador jogador2 = new Jogador(nome2, jogador1);
 Console.Clear();
-
-Tabuleiro tabuleiro = new Tabuleiro();
-bool vezjogador1 = jogador1.Simbolo == 'X';
-Jogo jogo = new Jogo(jogador1,jogador2);
 #endregion
 
 #region Looping Jogo
+Jogo jogo = new Jogo(jogador1, jogador2);
 while (jogo.FimDeJogo == false)
 {
     jogo.ControleDeVez();

@@ -37,7 +37,10 @@ namespace Jogodavelha
             }
         }
 
-        private void Vitoria()
+
+
+
+        public void Vitoria()
         {
             JogadorAtual.Ganhou();
             MostrarHud();

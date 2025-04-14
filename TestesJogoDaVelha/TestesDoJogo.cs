@@ -9,7 +9,7 @@ namespace TestesJogoDaVelha
     public class TestesJogador
     {
         [TestMethod]
-        public void TestJogador2RecebeoSimboloCerto()
+        public void TesteJogador2RecebeoSimboloCerto()
         {
             string nome1 = "Rogério";
             char simbolo1 = 'X';
@@ -21,7 +21,7 @@ namespace TestesJogoDaVelha
         }
 
         [TestMethod]
-        public void TestTrocaDeSimbolos()
+        public void TesteTrocaDeSimbolos()
         {
             string nome1 = "Rogério";
             char simbolo1 = 'X';
@@ -40,6 +40,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void VitoriaHorizontal()
         {
+            //O jogador atual deve ser o último a jogar
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -80,7 +81,7 @@ namespace TestesJogoDaVelha
             tabuleiroTestes.Grade[0, 2] = 'X';
 
             vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
-            Assert.AreEqual(vitoria, true, "Existe erro na lógica de vitória conforme esperado");
+            Assert.AreEqual(vitoria, false, "Existe erro na lógica de vitória");
         }
 
         [TestMethod]
@@ -111,7 +112,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void VitorialVerticalFalha()
         {
-            // Tem que dar erro
+            //O jogador atual deve ser o último a jogar
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -123,11 +124,100 @@ namespace TestesJogoDaVelha
             Jogador jogadorAtual = jogador1;
             tabuleiroTestes.Grade[1, 0] = 'X';
             tabuleiroTestes.Grade[0, 0] = 'O';
-            tabuleiroTestes.Grade[2, 2] = 'o';
+            tabuleiroTestes.Grade[2, 2] = 'X';
 
             vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
-            Assert.AreEqual(vitoria, true, "Erro na lógica conforme o esperado");
+            Assert.AreEqual(vitoria, false, "Erro na lógica de vitória");
         }
+        [TestMethod]
+        public void VitoriaDiagonal()
+        {
+            // //O jogador atual deve ser o último a jogar
+            string nome1 = "Rogério";
+            char simbolo1 = 'X';
+            string nome2 = "André";
+            bool vitoria;
+
+            Jogador jogador1 = new Jogador(nome1, simbolo1);
+            Jogador jogador2 = new Jogador(nome2, jogador1);
+            Tabuleiro tabuleiroTestes = new Tabuleiro();
+            Jogador jogadorAtual = jogador1;
+            tabuleiroTestes.Grade[0, 0] = 'X';
+            tabuleiroTestes.Grade[1, 1] = 'X';
+            tabuleiroTestes.Grade[2, 2] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, true, "Erro na lógica de vitória");
+            tabuleiroTestes.Resetar();
+
+            tabuleiroTestes.Grade[0, 2] = 'X';
+            tabuleiroTestes.Grade[1, 1] = 'X';
+            tabuleiroTestes.Grade[2, 0] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, true, "Erro na lógica de vitória");
+        }
+
+        [TestMethod]
+        public void VitoriaDiagonalFalha()
+        {
+            //O jogador atual deve ser o último a jogar
+            string nome1 = "Rogério";
+            char simbolo1 = 'X';
+            string nome2 = "André";
+            bool vitoria;
+
+            Jogador jogador1 = new Jogador(nome1, simbolo1);
+            Jogador jogador2 = new Jogador(nome2, jogador1);
+            Tabuleiro tabuleiroTestes = new Tabuleiro();
+            Jogador jogadorAtual = jogador1;
+            tabuleiroTestes.Grade[0, 0] = 'X';
+            tabuleiroTestes.Grade[1, 1] = 'O';
+            tabuleiroTestes.Grade[2, 2] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, false, "Erro na lógica de vitória");
+            tabuleiroTestes.Resetar();
+
+            tabuleiroTestes.Grade[0, 2] = 'X';
+            tabuleiroTestes.Grade[1, 1] = 'O';
+            tabuleiroTestes.Grade[2, 0] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, false, "Erro na lógica de vitória");
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void JogadaInvalidaNumeroJaMarcado()
+        {
+            string nome1 = "Rogério";
+            char simbolo1 = 'X';
+            string nome2 = "André";
+            Jogador jogador1 = new Jogador(nome1, simbolo1);
+            Jogador jogador2 = new Jogador(nome2, jogador1);
+            Tabuleiro tabuleiroTestes = new Tabuleiro();
+            Jogo jogo = new Jogo(jogador1, jogador2);
+            jogo.TabuleiroJogo.ValidarMarcacao(1, 'X');
+            jogo.TabuleiroJogo.ValidarMarcacao(1, 'O');
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void JogadaInvalidaNumeroForaDoIntervalo()
+
+        {
+            string nome1 = "Rogério";
+            char simbolo1 = 'X';
+            string nome2 = "André";
+            Jogador jogador1 = new Jogador(nome1, simbolo1);
+            Jogador jogador2 = new Jogador(nome2, jogador1);
+            Tabuleiro tabuleiroTestes = new Tabuleiro();
+            Jogo jogo = new Jogo(jogador1, jogador2);
+            jogo.TabuleiroJogo.ValidarMarcacao(31231203, 'X');
+        }
+    }
+
+    [TestClass]
+    public class TestesJogo
+    {
         [TestMethod]
         public void Empate()
         {
@@ -136,8 +226,7 @@ namespace TestesJogoDaVelha
             string nome2 = "André";
             Jogador jogador1 = new Jogador(nome1, simbolo1);
             Jogador jogador2 = new Jogador(nome2, jogador1);
-            Tabuleiro tabuleiroTestes = new Tabuleiro();
-            Jogo jogo = new Jogo(jogador1 , jogador2);
+            Jogo jogo = new Jogo(jogador1, jogador2);
             bool empate;
 
             jogo.TabuleiroJogo.ValidarMarcacao(1, jogo.JogadorAtual.Simbolo);
@@ -206,35 +295,150 @@ namespace TestesJogoDaVelha
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 0, "O tabuleiro não foi resetado corretamente");
 
         }
-
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void JogadaInvalidaNumeroJaMarcado()
+        public void ControleDeVezJogadoresAlternandoDurantePartida()
+        {
+            // Esse teste não considera vitórias ou empates, o objetivo é apenas preencher o tabuleiro e verificar se a alternancia entre jogadores está funcional dentro da partida
+            string nome1 = "Rogério";
+            char simbolo1 = 'X';
+            string nome2 = "André";
+            Jogador jogador1 = new Jogador(nome1, simbolo1);
+            Jogador jogador2 = new Jogador(nome2, jogador1);
+            Jogo jogo = new Jogo(jogador1, jogador2);
+
+            jogo.TabuleiroJogo.ValidarMarcacao(1, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador2, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(2, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador1, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(3, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador2, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(4, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador1, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(5, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador2, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(6, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador1, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(7, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador2, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(8, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador1, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+            jogo.TabuleiroJogo.ValidarMarcacao(9, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+            jogo.ControleDeVez();
+            Assert.AreEqual(jogador2, jogo.JogadorAtual, "Ocorreu erro na troca");
+
+        }
+        [TestMethod]
+        public void ControleDeVezJogadoresEntreRodadasJogadorXVence()
         {
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
             Jogador jogador1 = new Jogador(nome1, simbolo1);
             Jogador jogador2 = new Jogador(nome2, jogador1);
-            Tabuleiro tabuleiroTestes = new Tabuleiro();
             Jogo jogo = new Jogo(jogador1, jogador2);
-            jogo.TabuleiroJogo.ValidarMarcacao(1, 'X');
-            jogo.TabuleiroJogo.ValidarMarcacao(1, 'O');
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(1, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(5, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(2, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(6, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+     
+            // Vitória do jogador com símbolo X
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(3, jogo.JogadorAtual.Simbolo);
+            jogo.ResetarJogo();
+            jogo.ControleDeVez();
+
+            Assert.AreEqual(jogo.JogadorAtual, jogador2, "O jogador 2 não iniciou como primero");
+            Assert.AreEqual(jogo.JogadorAtual.Simbolo, 'X', "O jogador 2 não recebeu o símbolo X");
+            Assert.AreEqual(jogo.Jogador1.Simbolo , 'O', "O  Jogador 1 não recebeu o símbolo X");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void JogadaInvalidaNumeroForaDoIntervalo()
-
+        public void ControleDeVezJogadoresEntreRodadasJogadorOVence()
         {
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
             Jogador jogador1 = new Jogador(nome1, simbolo1);
             Jogador jogador2 = new Jogador(nome2, jogador1);
-            Tabuleiro tabuleiroTestes = new Tabuleiro();
             Jogo jogo = new Jogo(jogador1, jogador2);
-            jogo.TabuleiroJogo.ValidarMarcacao(31231203, 'X');
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(5, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(1, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(6, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(2, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(7, jogo.JogadorAtual.Simbolo);
+            jogo.TrocaVez();
+
+            //Vitória do jogador com símbolo "O"
+            jogo.ControleDeVez();
+            jogo.TabuleiroJogo.ValidarMarcacao(3, jogo.JogadorAtual.Simbolo);
+            jogo.ResetarJogo();
+            jogo.ControleDeVez();
+
+            Assert.AreEqual(jogo.JogadorAtual, jogador2, "O jogador 2 não iniciou como primeiro");
+            Assert.AreEqual(jogo.JogadorAtual.Simbolo, 'X', "O jogador 2 não recebeu o símbolo X");
+            Assert.AreEqual(jogo.Jogador1.Simbolo, 'O', "O  Jogador 1 não recebeu o símbolo X");
+        }
+        [TestMethod]
+        public void ContagemDeVitorias()
+        {
+            string nome1 = "Rogério";
+            char simbolo1 = 'X';
+            string nome2 = "André";
+            Jogador jogador1 = new Jogador(nome1, simbolo1);
+            Jogador jogador2 = new Jogador(nome2, jogador1);
+            Jogo jogo = new Jogo(jogador1, jogador2);
+
         }
     }
 }

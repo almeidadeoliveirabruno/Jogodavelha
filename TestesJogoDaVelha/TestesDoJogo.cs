@@ -1,6 +1,7 @@
 ﻿using Jogodavelha;
 using Microsoft.VisualStudio.TestPlatform.Common.Utilities;
 using System.Security.Cryptography.X509Certificates;
+using System.Text.Json.Serialization;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace TestesJogoDaVelha
@@ -377,7 +378,7 @@ namespace TestesJogoDaVelha
             jogo.ControleDeVez();
             jogo.TabuleiroJogo.ValidarMarcacao(6, jogo.JogadorAtual.Simbolo);
             jogo.TrocaVez();
-     
+
             // Vitória do jogador com símbolo X
             jogo.ControleDeVez();
             jogo.TabuleiroJogo.ValidarMarcacao(3, jogo.JogadorAtual.Simbolo);
@@ -386,7 +387,7 @@ namespace TestesJogoDaVelha
 
             Assert.AreEqual(jogo.JogadorAtual, jogador2, "O jogador 2 não iniciou como primero");
             Assert.AreEqual(jogo.JogadorAtual.Simbolo, 'X', "O jogador 2 não recebeu o símbolo X");
-            Assert.AreEqual(jogo.Jogador1.Simbolo , 'O', "O  Jogador 1 não recebeu o símbolo X");
+            Assert.AreEqual(jogo.Jogador1.Simbolo, 'O', "O  Jogador 1 não recebeu o símbolo X");
         }
 
         [TestMethod]
@@ -430,7 +431,7 @@ namespace TestesJogoDaVelha
             Assert.AreEqual(jogo.Jogador1.Simbolo, 'O', "O  Jogador 1 não recebeu o símbolo X");
         }
         [TestMethod]
-        public void ContagemDeVitorias()
+        public void VerificaEfeitosColateraisResetarJogo()
         {
             string nome1 = "Rogério";
             char simbolo1 = 'X';
@@ -438,8 +439,53 @@ namespace TestesJogoDaVelha
             Jogador jogador1 = new Jogador(nome1, simbolo1);
             Jogador jogador2 = new Jogador(nome2, jogador1);
             Jogo jogo = new Jogo(jogador1, jogador2);
-
+            jogo.ResetarJogo();
+            Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 0, "O número de jogadas realizadas não foi zerado");
+            Assert.AreEqual(jogo.Jogador1.Simbolo, 'O', "O Símbolo do jogador 1 não foi trocado");
+            Assert.AreEqual(jogo.Jogador2.Simbolo, 'X', "O Símbolo do jogador 2 não foi trocado");
+            Assert.AreEqual(jogo.FimDeJogo, false, "O fim de jogo não foi passado para false");
         }
+
+        public void PlacarIncrementaAposVitoria()
+        {
+            //Obs: Lembrar de trocar o jogador atual antes de confirmar a vitória, pois o método de vitória utiliza o jogador atual.
+            string nome1 = "Rogério";
+            char simbolo1 = 'X';
+            string nome2 = "André";
+
+            Jogador jogador1 = new Jogador(nome1, simbolo1);
+            Jogador jogador2 = new Jogador(nome2, jogador1);
+            Jogo jogo = new Jogo(jogador1, jogador2);
+
+            //Vitória Jogador1 como X. Placar esperado: Rogério:1 X André:0
+            jogo.TabuleiroJogo.Grade[0, 0] = 'X'; 
+            jogo.TabuleiroJogo.Grade[0, 1] = 'X';
+            jogo.TabuleiroJogo.Grade[0, 2] = 'X';
+            jogo.VerificaVitoria();
+            jogo.ResetarJogo();
+            jogo.ControleDeVez();
+
+            //Vitória Jogador2 como X. Placar esperado: Rogério:1 X André:1
+            jogo.TabuleiroJogo.Grade[0, 0] = 'X';
+            jogo.TabuleiroJogo.Grade[0, 1] = 'X';
+            jogo.TabuleiroJogo.Grade[0, 2] = 'X';
+            jogo.VerificaVitoria();
+            jogo.ResetarJogo();
+            jogo.ControleDeVez();
+
+            //Vitória Jogador2 como O. Placar esperado: Rogério:1 X André:2
+            jogo.TabuleiroJogo.Grade[0, 0] = 'O';
+            jogo.TabuleiroJogo.Grade[0, 1] = 'O';
+            jogo.TabuleiroJogo.Grade[0, 2] = 'O';
+            jogo.VerificaVitoria();
+            jogo.ResetarJogo();
+            jogo.ControleDeVez();
+
+            Assert.AreEqual(1, jogador1.Vitorias, "O placar do Jogador1 não foi incrementado após a vitória");
+            Assert.AreEqual(2, jogador2.Vitorias, "O placar do Jogador2 foi alterado sem motivo");
+        }
+
     }
 }
+
 

@@ -40,7 +40,7 @@ while (jogo.FimDeJogo == false)
 {
     jogo.ControleDeVez();
     jogo.MostrarHud();
-    jogo.TabuleiroJogo.MarcarTabuleiro(jogo);
+    jogo.TabuleiroJogo.MarcarTabuleiro(jogo.JogadorAtual.Simbolo, jogo.MostrarHud);
     jogo.VerificaVitoria();
     if (jogo.FimDeJogo == false)
     {
@@ -117,6 +117,7 @@ static void PerguntaResetarJogo(Jogo jogo)
             jogo.FinalizarJogo();
             break;
         }
+        jogo.MostrarHud();
         Console.WriteLine("Digite (S) para resetar ou (N) para parar de jogar");
     }
 }

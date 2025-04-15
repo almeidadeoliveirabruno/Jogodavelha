@@ -52,19 +52,16 @@ namespace Jogodavelha
                 }
                 catch (FormatException ex)
                 {
-                    Console.Clear();
                     jogo.MostrarHud();
                     Console.WriteLine("Digite apenas números inteiros!");
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
-                    Console.Clear();
                     jogo.MostrarHud();
                     Console.WriteLine("Digite um número de 1 até 9!"); 
                 }
                 catch (InvalidOperationException ex)
                 {
-                    Console.Clear();
                     jogo.MostrarHud();
                     Console.WriteLine("Este quadrado ja foi marcado!");
                 }

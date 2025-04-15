@@ -37,7 +37,7 @@ namespace Jogodavelha
         }
         
         
-        public void MarcarTabuleiro(Char simboloAtual)
+        public void MarcarTabuleiro(Jogo jogo)
             //marca o simbolo no tabuleiro, ele recebe o simbolo do jogador atual
         {
             bool jogadaInvalida = true;
@@ -47,19 +47,25 @@ namespace Jogodavelha
                 try
                 {
                     int num = int.Parse(Console.ReadLine());
-                    ValidarMarcacao(num, simboloAtual);
+                    ValidarMarcacao(num, jogo.JogadorAtual.Simbolo);
                     jogadaInvalida = false;
                 }
                 catch (FormatException ex)
                 {
+                    Console.Clear();
+                    jogo.MostrarHud();
                     Console.WriteLine("Digite apenas números inteiros!");
                 }
                 catch (ArgumentOutOfRangeException ex)
                 {
+                    Console.Clear();
+                    jogo.MostrarHud();
                     Console.WriteLine("Digite um número de 1 até 9!"); 
                 }
                 catch (InvalidOperationException ex)
                 {
+                    Console.Clear();
+                    jogo.MostrarHud();
                     Console.WriteLine("Este quadrado ja foi marcado!");
                 }
             }

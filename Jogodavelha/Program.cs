@@ -40,7 +40,7 @@ while (jogo.FimDeJogo == false)
 {
     jogo.ControleDeVez();
     jogo.MostrarHud();
-    jogo.TabuleiroJogo.MarcarTabuleiro(jogo.JogadorAtual.Simbolo);
+    jogo.TabuleiroJogo.MarcarTabuleiro(jogo);
     jogo.VerificaVitoria();
     if (jogo.FimDeJogo == false)
     {

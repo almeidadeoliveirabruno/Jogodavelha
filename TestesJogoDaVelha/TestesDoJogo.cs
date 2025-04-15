@@ -12,6 +12,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void TesteJogador2RecebeoSimboloCerto()
         {
+            //verifica se o jogador 2 recebe o simbolo certo
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             char simbolo2Esperado = 'O';
@@ -24,6 +25,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void TesteTrocaDeSimbolos()
         {
+            //verifica se a troca de simbolo acontece dentro do método
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -67,7 +69,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void VitoriaHorizontalFalha()
         {
-            // Tem que dar erro
+            // Tem que dar erro na vitoria horizontal
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -88,6 +90,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void VitoriaVertical()
         {
+            //Verifica vitória na vertical
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -189,6 +192,7 @@ namespace TestesJogoDaVelha
         [ExpectedException(typeof(InvalidOperationException))]
         public void JogadaInvalidaNumeroJaMarcado()
         {
+            //Situação que o número ja foi marcado no tabuleiro.
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -203,7 +207,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void JogadaInvalidaNumeroForaDoIntervalo()
-
+            //Situação que o número marcado está fora do intervalo
         {
             string nome1 = "Rogério";
             char simbolo1 = 'X';
@@ -222,6 +226,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void Empate()
         {
+            //Situação de empate em que o tabuleiro é preenchido. O empate é dados pela contagem de jogadas.
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -232,62 +237,62 @@ namespace TestesJogoDaVelha
 
             jogo.TabuleiroJogo.ValidarMarcacao(1, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 1, "O número de jogadas realizadas não foi contabilizado devidamente");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(2, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 2, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, false, "O jogo empatou onde não deveria");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(3, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 3, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, false, "O jogo empatou onde não deveria");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(4, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 4, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, false, "O jogo empatou onde não deveria");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(5, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 5, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, false, "O jogo empatou onde não deveria");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(9, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 6, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, false, "O jogo empatou onde não deveria");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(8, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 7, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, false, "O jogo empatou onde não deveria");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(7, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 8, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, false, "O jogo empatou onde não deveria");
             jogo.ControleDeVez();
 
             jogo.TabuleiroJogo.ValidarMarcacao(6, jogo.JogadorAtual.Simbolo);
             jogo.TabuleiroJogo.VerificaVitoria(jogo.JogadorAtual);
-            empate = jogo.VerificaEmpate();
+            empate = jogo.TabuleiroJogo.VerificaEmpate();
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 9, "O número de jogadas realizadas não foi contabilizado devidamente");
             Assert.AreEqual(empate, true, "O jogo  não empatou onde deveria");
             jogo.ControleDeVez();
@@ -356,6 +361,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void ControleDeVezJogadoresEntreRodadasJogadorXVence()
         {
+            //Verifica se depois do jogador X vencer o jogo, os simbolos dos jogadores são trocados e alterna o jogador que inicia a rodada.
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -393,6 +399,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void ControleDeVezJogadoresEntreRodadasJogadorOVence()
         {
+            //Verifica se depois do jogador O vencer o jogo, os simbolos dos jogadores são trocados e alterna o jogador que inicia a rodada.
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -433,6 +440,7 @@ namespace TestesJogoDaVelha
         [TestMethod]
         public void VerificaEfeitosColateraisResetarJogo()
         {
+            //Verifica se o resetar jogo se comporta da forma adequada
             string nome1 = "Rogério";
             char simbolo1 = 'X';
             string nome2 = "André";
@@ -458,7 +466,7 @@ namespace TestesJogoDaVelha
             Jogo jogo = new Jogo(jogador1, jogador2);
 
             //Vitória Jogador1 como X. Placar esperado: Rogério:1 X André:0
-            jogo.TabuleiroJogo.Grade[0, 0] = 'X'; 
+            jogo.TabuleiroJogo.Grade[0, 0] = 'X';
             jogo.TabuleiroJogo.Grade[0, 1] = 'X';
             jogo.TabuleiroJogo.Grade[0, 2] = 'X';
             jogo.VerificaVitoria();

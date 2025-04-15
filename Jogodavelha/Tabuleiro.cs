@@ -124,6 +124,15 @@ namespace Jogodavelha
             }
             return false;
         }
+
+        public bool VerificaEmpate()
+        {
+            if (JogadasRealizadas == 9)
+            {
+                return true;
+            }
+            return false;
+        }
         public void Resetar()
             //Reinicia o tabuleiro
         {

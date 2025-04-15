@@ -48,15 +48,6 @@ namespace Jogodavelha
             Console.ResetColor();
         }
 
-        public bool VerificaEmpate()
-        {
-            if (TabuleiroJogo.JogadasRealizadas == 9)
-            {
-                return true;
-            }
-            return false;
-        }
-
         public void MostrarHud()
         {
             Console.Clear();

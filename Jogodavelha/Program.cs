@@ -44,7 +44,7 @@ while (jogo.FimDeJogo == false)
     jogo.VerificaVitoria();
     if (jogo.FimDeJogo == false)
     {
-        if (jogo.VerificaEmpate())
+        if (jogo.TabuleiroJogo.VerificaEmpate())
         {
             jogo.MostrarHud();
             Console.WriteLine("Empate!");

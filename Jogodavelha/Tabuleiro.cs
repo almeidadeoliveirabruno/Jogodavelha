@@ -122,6 +122,8 @@ namespace Jogodavelha
             {
                 return true;
             }
+            
+            //Diagonal Secundária
             if (Grade[0, 2] == simboloJogadorAtual && Grade[1, 1] == simboloJogadorAtual && Grade[2, 0] == simboloJogadorAtual)
             {
                 return true;

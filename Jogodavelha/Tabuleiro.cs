@@ -38,7 +38,7 @@ namespace Jogodavelha
         
         
         public void MarcarTabuleiro(Char simboloJogadorAtual, Action mostrarHud)
-            //Action é para quando é passada um método que não retorna nada
+            //Action é para quando é passada um método que não retorna nada para outra funcao
 
             //marca o simbolo no tabuleiro, ele recebe o simbolo do jogador atual
         {

@@ -59,7 +59,7 @@ namespace TestesJogoDaVelha
                 {
                     tabuleiroTestes.Grade[i, j] = 'X';
                 }
-
+                
                 vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
                 Assert.AreEqual(vitoria, true, "Existe erro na lógica de vitória");
                 tabuleiroTestes.Resetar();
@@ -82,9 +82,23 @@ namespace TestesJogoDaVelha
             tabuleiroTestes.Grade[0, 0] = 'X';
             tabuleiroTestes.Grade[0, 1] = 'O';
             tabuleiroTestes.Grade[0, 2] = 'X';
-
             vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
             Assert.AreEqual(vitoria, false, "Existe erro na lógica de vitória");
+
+            tabuleiroTestes.Resetar();
+
+            tabuleiroTestes.Grade[1, 0] = 'X';
+            tabuleiroTestes.Grade[1, 1] = 'O';
+            tabuleiroTestes.Grade[1, 2] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, false, "Existe erro na lógica de vitória");
+
+            tabuleiroTestes.Grade[2, 0] = 'X';
+            tabuleiroTestes.Grade[2, 1] = 'O';
+            tabuleiroTestes.Grade[2, 2] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, false, "Existe erro na lógica de vitória");
+
         }
 
         [TestMethod]
@@ -126,13 +140,25 @@ namespace TestesJogoDaVelha
             Jogador jogador2 = new Jogador(nome2, jogador1);
             Tabuleiro tabuleiroTestes = new Tabuleiro();
             Jogador jogadorAtual = jogador1;
-            tabuleiroTestes.Grade[1, 0] = 'X';
-            tabuleiroTestes.Grade[0, 0] = 'O';
-            tabuleiroTestes.Grade[2, 2] = 'X';
+            tabuleiroTestes.Grade[0, 0] = 'X';
+            tabuleiroTestes.Grade[1, 0] = 'O';
+            tabuleiroTestes.Grade[2, 0] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, false, "Erro na lógica de vitória");
 
+            tabuleiroTestes.Grade[0, 1] = 'X';
+            tabuleiroTestes.Grade[1, 1] = 'O';
+            tabuleiroTestes.Grade[2, 1] = 'X';
+            vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
+            Assert.AreEqual(vitoria, false, "Erro na lógica de vitória");
+
+            tabuleiroTestes.Grade[0, 2] = 'X';
+            tabuleiroTestes.Grade[1, 2] = 'O';
+            tabuleiroTestes.Grade[2, 2] = 'X';
             vitoria = tabuleiroTestes.VerificaVitoria(jogadorAtual);
             Assert.AreEqual(vitoria, false, "Erro na lógica de vitória");
         }
+
         [TestMethod]
         public void VitoriaDiagonal()
         {
@@ -218,11 +244,7 @@ namespace TestesJogoDaVelha
             Jogo jogo = new Jogo(jogador1, jogador2);
             jogo.TabuleiroJogo.ValidarMarcacao(31231203, 'X');
         }
-    }
 
-    [TestClass]
-    public class TestesJogo
-    {
         [TestMethod]
         public void Empate()
         {
@@ -301,6 +323,12 @@ namespace TestesJogoDaVelha
             Assert.AreEqual(jogo.TabuleiroJogo.JogadasRealizadas, 0, "O tabuleiro não foi resetado corretamente");
 
         }
+    }
+
+    [TestClass]
+    public class TestesJogo
+    {
+        
         [TestMethod]
         public void ControleDeVezJogadoresAlternandoDurantePartida()
         {

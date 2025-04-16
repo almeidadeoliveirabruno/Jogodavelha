@@ -51,7 +51,7 @@ while (jogo.FimDeJogo == false)
             PerguntaResetarJogo(jogo);
         } 
         else {  
-            jogo.TrocaVez(); 
+            jogo.TrocaVez(); // método que alterna rodadas ainda durante a partida
         }
     }
     else
@@ -90,7 +90,7 @@ static char  SelecionarSimbolo(string nome)
         string simbolo_string = Console.ReadLine().ToUpper();
         if (simbolo_string == "X" || simbolo_string == "O")
         {
-            return simbolo_string[0]; 
+            return simbolo_string[0]; // garante que está retornando um char
         }
         else
         {
@@ -105,7 +105,7 @@ static void PerguntaResetarJogo(Jogo jogo)
 {
     while (true)
     {
-        Console.WriteLine("Você deseja Jogar novamente (S ou N)?");
+        Console.WriteLine("Você deseja Jogar novamente (S ou N)?");       
         string resposta = Console.ReadLine().ToUpper();
         if (resposta == "S")
         {

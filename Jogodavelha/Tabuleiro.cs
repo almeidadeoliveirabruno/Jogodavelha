@@ -100,30 +100,29 @@ namespace Jogodavelha
             JogadasRealizadas++;
         }
 
-        public bool VerificaVitoria(Jogador jogadoratual)
+        public bool VerificaVitoria(char simboloJogadorAtual)
         {
-            char simbolo = jogadoratual.Simbolo;
             for (int i = 0; i < 3; i++)
             {
                 //Verifica a linha
-                if ((Grade[i, 0] == simbolo) && (Grade[i, 1] == simbolo) && (Grade[i, 2] == simbolo))
+                if ((Grade[i, 0] == simboloJogadorAtual) && (Grade[i, 1] == simboloJogadorAtual) && (Grade[i, 2] == simboloJogadorAtual))
                 {
                     return true;
                 }
 
                 //Verifica a coluna
-                if ((Grade[0, i] == simbolo) && (Grade[1, i] == simbolo) && (Grade[2, i] == simbolo))
+                if ((Grade[0, i] == simboloJogadorAtual) && (Grade[1, i] == simboloJogadorAtual) && (Grade[2, i] == simboloJogadorAtual))
                 {
                     return true;
                 }
             }
 
             //Diagonal principal
-            if ((Grade[0, 0] == simbolo) && (Grade[1, 1] == simbolo) && (Grade[2, 2] == simbolo))
+            if ((Grade[0, 0] == simboloJogadorAtual) && (Grade[1, 1] == simboloJogadorAtual) && (Grade[2, 2] == simboloJogadorAtual))
             {
                 return true;
             }
-            if (Grade[0, 2] == simbolo && Grade[1, 1] == simbolo && Grade[2, 0] == simbolo)
+            if (Grade[0, 2] == simboloJogadorAtual && Grade[1, 1] == simboloJogadorAtual && Grade[2, 0] == simboloJogadorAtual)
             {
                 return true;
             }

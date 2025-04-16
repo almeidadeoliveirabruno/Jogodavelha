@@ -30,7 +30,7 @@ namespace Jogodavelha
         }
         public void VerificaVitoria()
         {
-            if (TabuleiroJogo.VerificaVitoria(JogadorAtual))
+            if (TabuleiroJogo.VerificaVitoria(JogadorAtual.Simbolo))
             {
                 Vitoria();
                 FimDeJogo = true;

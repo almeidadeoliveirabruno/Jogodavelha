@@ -6,7 +6,6 @@ Console.ForegroundColor = ConsoleColor.Yellow;
 Console.WriteLine("Bem vindo ao jogo da Velha!");
 Console.ResetColor();
 Console.WriteLine();
-
 Console.ForegroundColor = ConsoleColor.Blue;
 Console.WriteLine("1 - O primeiro jogador pode escolher um símbolo");
 Console.WriteLine();
